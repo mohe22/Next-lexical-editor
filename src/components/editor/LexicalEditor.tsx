@@ -126,13 +126,15 @@ export default function LexicalEditor({
   loadFromLocalStorge?:boolean
 }) {
   
-  function Load(){
-    const data = loadFromLocalStorge
-    ? localStorage.getItem("editorState")
-      : initialEditorState
-    
-    return data
+  function Load() {
+    if (typeof window !== "undefined" && loadFromLocalStorge) {
+      const data = localStorage.getItem("editorState");
+      return data;
+    } else {
+      return initialEditorState;
+    }
   }
+  
   const initialConfig = {
     namespace: "Editor",
     nodes: [...PlaygroundNodes],
