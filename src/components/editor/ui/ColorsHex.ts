@@ -1,4 +1,3 @@
-import { string } from "zod";
 export interface ColorHex {
   color: string;
   hex: string;
