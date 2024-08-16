@@ -1,0 +1,10 @@
+
+.ScrollToStyle{
+    --tw-text-opacity: 5;
+    border-left: 8px  solid  rgb(59 130 246 / var(--tw-text-opacity));
+    padding: 8px;
+    transition:0.5s;
+    
+
+
+}
