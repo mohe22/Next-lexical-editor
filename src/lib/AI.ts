@@ -3,7 +3,7 @@ import { HfInference } from "@huggingface/inference";
 
 
 
-const inference = new HfInference(process.env.AIKEY);
+const inference = new HfInference("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");
 
 
 const countTokens = (text: string): number => {
@@ -100,6 +100,17 @@ export async function ask(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 export async function WriteAI(
   Ques: string,
   systemMessage: string,
@@ -115,6 +126,7 @@ export async function WriteAI(
     user:
     ${Ques}
   `;
+
 
   for await (const chunk of sendREQ(query, false)) {
     if (onChunkReceived) {

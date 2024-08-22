@@ -1,7 +1,7 @@
 import ShinyButton from "@/components/magicui/shiny-button";
 import { WriteAI } from "@/lib/AI";
-import { $getSelection, $isRangeSelection, LexicalEditor } from "lexical";
-import { MicVocal, Pencil, Sparkles, SpellCheck2 } from "lucide-react";
+import { $createTextNode, $getSelection, $isRangeSelection, $setSelection, LexicalEditor, ParagraphNode, TextNode } from "lexical";
+import { AirVentIcon, MicVocal, Pencil, Sparkles, SpellCheck2 } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -15,6 +15,17 @@ type Props = {
 };
 
 const types = [
+  {
+    key: "Auto complete",
+    icon: <AirVentIcon className={"w-4 h-4 text-purple-500"} />,
+    systemMessage: `
+      You are a helpful AI embedded in a blog text editor app that is used to autocomplete sentences
+      The traits of AI include expert knowledge, helpfulness, cleverness, and articulateness.
+      AI is a well-behaved and well-mannered individual.
+      AI is always friendly, kind, and inspiring, and he is eager to provide vivid and thoughtful responses to the user.
+
+    `,
+  },
   {
     key: "improve writing",
     icon: <Pencil className={"w-4 h-4 text-purple-500"} />,
@@ -111,7 +122,7 @@ const types = [
 
 export default function AI({ editor }: Props) {
   const [isOpen,setIsOpen]=useState(false)
-  const handleAskAI = async (systemMessage: string) => {
+  const handleAskAI = async (systemMessage: string,type:string) => {
     try {
       let selectedText = "";
 
@@ -126,18 +137,60 @@ export default function AI({ editor }: Props) {
           return selectedText;
         }
       });
-
-      
-      
-
       await WriteAI(selectedText, systemMessage, (response) => {
         editor.update(() => {
-          const selection = $getSelection();          
-          if ($isRangeSelection(selection)) {     
+          const selection = $getSelection();
+          if(type === "Auto complete" && $isRangeSelection(selection)){
+              const res = selection.getNodes();        
+              if (res.length > 0 ) {
+                
+                const lastNode = res[res.length - 1] as any;
+                const isBold = selection.hasFormat("bold");
+                const isItalic = selection.hasFormat("italic");
+                const isUnderline = selection.hasFormat("underline");
+                const isStrikethrough = selection.hasFormat("strikethrough");
+                const isCode = selection.hasFormat("code");
+
+  
+                const newTextNode = $createTextNode(response);
+
+                if (isBold) {
+                  newTextNode.setFormat("bold");
+                }
+                if (isItalic) {
+                  newTextNode.setFormat("italic");
+                }
+                if (isUnderline) {
+                  newTextNode.setFormat("underline");
+                }
+                if (isStrikethrough) {
+                  newTextNode.setFormat("strikethrough");
+                }
+                if (isCode) {
+                  newTextNode.setFormat("code");
+                }
+
+
+              if (lastNode instanceof TextNode || lastNode instanceof ParagraphNode) {
+                lastNode.insertAfter(newTextNode);
+              } else {
+                const newParagraphNode = new ParagraphNode();
+                newParagraphNode.append(newTextNode);
+                selection.insertNodes([newParagraphNode]);
+              }  
+  
+                
+              }
+            
+          }else{
+            if ($isRangeSelection(selection)) {     
                                
-            selection.insertText(response);
+              selection.insertText(response);
+            }
           }
+         
         });
+  
       });
       setIsOpen(false)
 
@@ -146,6 +199,7 @@ export default function AI({ editor }: Props) {
     }
   };
 
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
@@ -153,7 +207,7 @@ export default function AI({ editor }: Props) {
           className="h-[15px] gap-x-2 px-3 flex items-center justify-center flex-row"
         >
           <Sparkles className="w-4 h-4 text-purple-500" />
-          Ask AI
+          <span className="xl:flex hidden">Ask AI</span>
         </ShinyButton>
       </PopoverTrigger>
       <PopoverContent className="mt-3 p-2 gap-y-1 w-full flex items-center flex-col justify-center">
@@ -169,7 +223,7 @@ export default function AI({ editor }: Props) {
                 <PopoverContent className="p-2 " side="right" sideOffset={15}>
                   {e.children.map((k) => (
                     <Button
-                      onClick={() => handleAskAI(k.systemMessage)}
+                      onClick={() => handleAskAI(k.systemMessage,e.key)}
                       className="flex flex-row w-full items-center justify-start "
                       variant="ghost"
                       key={k.key}
@@ -184,7 +238,7 @@ export default function AI({ editor }: Props) {
             return (
               <React.Fragment key={e.key}>
                 <Button
-                  onClick={() => handleAskAI(e.systemMessage!)}
+                  onClick={() => handleAskAI(e.systemMessage!,e.key)}
                   className="flex flex-row  w-full items-center justify-start gap-x-3"
                   variant={"ghost"}
                 >
