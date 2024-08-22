@@ -3,7 +3,7 @@ import { HfInference } from "@huggingface/inference";
 
 
 
-const inference = new HfInference("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");
+const inference = new HfInference(process.env.AIKey);
 
 
 const countTokens = (text: string): number => {
