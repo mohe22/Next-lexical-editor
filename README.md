@@ -1,6 +1,6 @@
 This project uses the Lexical editor with Next.js 14 and the shadcn/ui library, integrated with Hugging Face AI. To use the AI features, simply create an account at Hugging Face, get your API key, and add it to your .env file.
 
-Vide demo:https://www.youtube.com/watch?v=Dt20ssTWS4s&t=40s
+Video demo:https://www.youtube.com/watch?v=Dt20ssTWS4s&t=40s
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
