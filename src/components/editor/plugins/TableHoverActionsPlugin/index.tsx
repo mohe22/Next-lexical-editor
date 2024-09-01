@@ -109,7 +109,7 @@ function TableHoverActionsContainer({
           setPosition({
             height: BUTTON_WIDTH_PX,
             left: tableElemX,
-            top: tableElemBottom - editorElemY + 25,
+            top: tableElemBottom - editorElemY + 2,
             width: tableElemWidth,
           });
         } else if (hoveredColumnNode) {
@@ -117,8 +117,8 @@ function TableHoverActionsContainer({
           setShownRow(false);
           setPosition({
             height: tableElemHeight,
-            left: tableElemRight + 5,
-            top: tableElemY - editorElemY +20,
+            left: tableElemRight + 2,
+            top: tableElemY - editorElemY  ,
             width: BUTTON_WIDTH_PX,
           });
         }
@@ -220,7 +220,7 @@ function TableHoverActionsContainer({
        >
           <Button
             size={"none"}
-            className={"flex items-center  justify-center left-0  absolute  tableAddRows"}
+            className={"flex items-center  justify-center left-0 top-0 absolute  tableAddRows"}
             style={{...position}}
             onClick={() => insertAction(true)}
         
@@ -233,7 +233,7 @@ function TableHoverActionsContainer({
         <ToolTip side='right' label={`${isColumLimit?" reached Columns limit":"insert Columns"}`}>
           <Button
             size={"none"}
-            className={"flex items-center  justify-center left-0  absolute  tableColumns"}
+            className={"flex items-center  justify-center left-0   top-0 absolute  tableColumns"}
             style={{...position}}
             onClick={() => insertAction(false)}
           >
