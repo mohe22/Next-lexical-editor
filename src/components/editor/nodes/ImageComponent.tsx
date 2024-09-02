@@ -84,7 +84,7 @@ function LazyImage({
 
   
   return (
-    <img
+    <Image
         className={className || undefined}
         src={src}
         alt={altText}
@@ -113,7 +113,7 @@ function BrokenImage(): JSX.Element {
         alt='error'
         draggable="false"
       />
-      <span className=' text-muted-foreground font-medium  text-sm'>this image couldn't be loaded</span>
+      <span className=' text-muted-foreground font-medium  text-sm'>this image can not be loaded</span>
     </div>
   );
 }
