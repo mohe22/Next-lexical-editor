@@ -7,6 +7,7 @@ import {COMMAND_PRIORITY_LOW} from 'lexical';
 import {useEffect} from 'react';
 
 import {INSERT_IMAGE_COMMAND} from '../ImagesPlugin';
+import { useEdgeStore } from '@/lib/edgestore';
 
 const ACCEPTABLE_IMAGE_TYPES = [
   'image/',
@@ -18,20 +19,23 @@ const ACCEPTABLE_IMAGE_TYPES = [
 
 export default function DragDropPaste(): null {
   const [editor] = useLexicalComposerContext();
+  
+  const { edgestore } = useEdgeStore();
+
   useEffect(() => {
     return editor.registerCommand(
       DRAG_DROP_PASTE,
       (files) => {
         (async () => {
-          const filesResult = await mediaFileReader(
-            files,
-            [ACCEPTABLE_IMAGE_TYPES].flatMap((x) => x),
-          );
-          for (const {file, result} of filesResult) {
-            if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
+          console.log(files);
+          for (const file of files) {
+            const res = await edgestore.publicFiles.upload({
+              file
+            });
+            if(res.url){
               editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
                 altText: file.name,
-                src: result,
+                src: res.url,
               });
             }
           }

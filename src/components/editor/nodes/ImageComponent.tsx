@@ -35,6 +35,8 @@ import brokenImage from '../../../../public/images/image-broken.svg';
 import ImageResizer from '../ui/ImageResizer';
 import {$isImageNode} from './ImageNode';
 import Image from 'next/image';
+import { Separator } from '@/components/ui/separator';
+import { Loader } from 'lucide-react';
 
 const imageCache = new Set();
 
@@ -100,16 +102,19 @@ function LazyImage({
 
 function BrokenImage(): JSX.Element {
   return (
-    <Image
-      src={brokenImage}
-      height={200}
-      width={200}
-      style={{
-        opacity: 0.2,
-      }}
-      alt='error'
-      draggable="false"
-    />
+    <div className=' w-[500px] h-[500px]  space-y-4 flex  flex-col items-center justify-center bg-[#FFFFFF] dark:bg-[#2F3438]'>
+        <Image
+          src={brokenImage}
+          height={120}
+          width={120}
+          style={{
+            opacity: 0.2,
+          }}
+        alt='error'
+        draggable="false"
+      />
+      <span className=' text-muted-foreground font-medium  text-sm'>this image couldn't be loaded</span>
+    </div>
   );
 }
 
@@ -139,9 +144,8 @@ export default function ImageComponent({
   const activeEditorRef = useRef<LexicalEditor | null>(null);
   const [isLoadError, setIsLoadError] = useState<boolean>(false);
 
+
   
-
-
  
   
 
@@ -355,10 +359,10 @@ export default function ImageComponent({
   const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
   const isFocused = isSelected || isResizing;
   return (
-    <Suspense  fallback={null}>
+    <Suspense  fallback={<Separator className='h-[500px] w-[500px] rounded-md flex  items-center justify-center'><Loader className='w-6 h-6 animate-spin'/></Separator>} > 
       <div className='w-full'>
 
-        <div  draggable={draggable}>
+        <div  draggable={draggable} className='w-full'>
           {isLoadError ? (
             <BrokenImage />
           ) : (
@@ -371,6 +375,7 @@ export default function ImageComponent({
               src={src}
               altText={altText}
               imageRef={imageRef}
+              
               width={width}
               height={height}
               maxWidth={maxWidth}

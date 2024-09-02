@@ -34,6 +34,8 @@ import { useGetPhotosByQuery } from "../../utils/useUnsplash";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEdgeStore } from "@/lib/edgestore";
+import { Loader, Loader2 } from "lucide-react";
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 
@@ -58,6 +60,10 @@ export function InsertImageDialog({
   const popupRef = useRef<HTMLDivElement>(null);
   const [queryPhoto, setQueryPhoto] = useState<string>("cat");
   const [position, setPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const [IsLoading, setIsLoading] = useState<boolean>(false);
+
+  const { edgestore } = useEdgeStore();
+
   const { data, isLoading } = useGetPhotosByQuery({ query: queryPhoto });
   const photos = data?.results || [];
 
@@ -114,9 +120,14 @@ export function InsertImageDialog({
   const handleFileChange =async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      
-      const tempImageSrc = URL.createObjectURL(file)
-      onClick(tempImageSrc, file.name);
+      const res = await edgestore.publicFiles.upload({
+        file,
+       
+        onProgressChange: () => setIsLoading(true),
+      });
+      if(res.url)
+        setIsLoading(false)
+        onClick(res.url!, file.name);
     
 
     }
@@ -190,6 +201,13 @@ export function InsertImageDialog({
               className="absolute inset-0 opacity-0  w-full h-full cursor-pointer"
               onChange={handleFileChange}
             />
+            {
+              IsLoading && 
+              <div className="flex flex-row  gap-x-3 my-3 items-center  justify-center">
+                <Loader2 className="w-6 h-6 animate-spin"/>
+                <span className=" text-muted-foreground text-sm font-medium">Loading image...</span>
+              </div>
+            }
             <Button type="button" className="w-full" variant={"outline"}>
               Upload file
             </Button>

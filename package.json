@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@edgestore/react": "^0.2.2",
+    "@edgestore/server": "^0.2.2",
     "@excalidraw/excalidraw": "^0.17.1",
     "@huggingface/inference": "^2.8.0",
     "@lexical/file": "0.17.1",
@@ -39,12 +41,14 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.8",
+    "install": "^0.13.0",
     "lexical": "^0.17.1",
     "lodash-es": "^4.17.21",
     "lucide": "^0.412.0",
     "lucide-react": "^0.412.0",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
+    "npm": "^10.8.3",
     "prettier": "^2.3.2",
     "react": "^18",
     "react-dom": "^18",
@@ -55,7 +59,8 @@
     "tailwindcss-animate": "^1.0.7",
     "typewriter-effect": "^2.21.0",
     "unsplash-js": "^7.0.19",
-    "use-debounce": "^10.0.2"
+    "use-debounce": "^10.0.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/codemirror": "^5.60.15",
