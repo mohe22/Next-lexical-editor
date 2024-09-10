@@ -84,7 +84,7 @@ function LazyImage({
 
   
   return (
-    <Image
+    <img
         className={className || undefined}
         src={src}
         alt={altText}
