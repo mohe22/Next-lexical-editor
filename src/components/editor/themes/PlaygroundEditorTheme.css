@@ -79,6 +79,8 @@
   font-family: Menlo, Consolas, Monaco, monospace;
   font-size: 94%;
 }
+
+
 .dark .PlaygroundEditorTheme__textCode {
   background-color: rgba(130, 130, 130, 0.366);
   padding: 3px .25rem;
@@ -110,7 +112,7 @@
   border-radius: 5px;
   font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
-  padding: 8px 8px 8px 52px;
+  padding: 40px 40px 40px 20px;
   line-height: 1.53;
   font-size: 13px;
   margin: 0;
@@ -118,29 +120,15 @@
   margin-bottom: 8px;
   overflow-x: auto;
   color: black;
-  position: relative;
   tab-size: 2;
 }
- .PlaygroundEditorTheme__code:before {
-  content: attr(data-gutter);
-  position: absolute;
-  left: 0;  
-  top: 0;
-  border-right: 1px #F7F6F3 solid;
-  padding: 8px;
-  color: #777;
-  white-space: pre-wrap;
-  text-align: right;
-  min-width: 25px;
-}
-
 
 .dark .PlaygroundEditorTheme__code {
-  background-color: #2F3438;
+  background-color: #1a1a1a;
   border-radius: 5px;
   font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
-  padding: 8px 8px 8px 52px;
+  padding: 40px 40px 40px 20px;
   line-height: 1.53;
   font-size: 13px;
   margin: 0;
@@ -148,21 +136,9 @@
   margin-bottom: 8px;
   overflow-x: auto;
   color: white;
-  position: relative;
   tab-size: 2;
 }
-.dark .PlaygroundEditorTheme__code:before {
-  content: attr(data-gutter);
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-right: 1px #3F4448 solid;
-  padding: 8px;
-  color: #777;
-  white-space: pre-wrap;
-  text-align: right;
-  min-width: 25px;
-}
+
 .PlaygroundEditorTheme__table {
 
   border-collapse: collapse;
@@ -488,6 +464,7 @@
 .PlaygroundEditorTheme__embedBlockFocus {
   outline: 2px solid rgb(60, 132, 244);
 }
+
 .PlaygroundEditorTheme__layoutContainer {
   display: grid;
   gap: 10px;

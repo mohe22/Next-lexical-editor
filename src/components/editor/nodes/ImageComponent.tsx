@@ -36,8 +36,14 @@ import ImageResizer from '../ui/ImageResizer';
 import {$isImageNode} from './ImageNode';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
-import { Loader } from 'lucide-react';
-
+import { Loader, XIcon } from 'lucide-react';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogClose,
+  DialogContainer,
+} from "@/components/shared-components/DialogProvider";
 const imageCache = new Set();
 
 export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> =
@@ -84,19 +90,59 @@ function LazyImage({
 
   
   return (
-    <img
-        className={className || undefined}
-        src={src}
-        alt={altText}
-        ref={imageRef}
-        style={{
-          height: height === 'inherit' ? 'auto' : height,
-          width: width === 'inherit' ? '90vw' : width,
+    <Dialog
+    transition={{
+      duration: 0.3,
+      ease: "easeInOut",
+    }}
+  >
+    <DialogTrigger>
+       <img
+          className={className || undefined}
+          src={src}
+          alt={altText}
+          ref={imageRef}
+          style={{
+            height: height === 'inherit' ? 'auto' : height,
+            width: width === 'inherit' ? '90vw' : width,
+          }}
+          id='upload-file'
+          onError={onError}
+          draggable="true"
+        />
+    </DialogTrigger>
+    <DialogContainer>
+      <DialogContent className="relative h-fit w-fit">
+        <img
+          className={className || undefined}
+          src={src}
+          alt={altText}
+          ref={imageRef}
+          style={{
+            height: height === 'inherit' ? 'auto' : height,
+            width: width === 'inherit' ? '90vw' : width,
+          }}
+          id='upload-file'
+          onError={onError}
+          draggable="true"
+        />
+      </DialogContent>
+      <DialogClose
+        className="fixed right-6 top-6 h-fit w-fit rounded-full bg-white p-1"
+        variants={{
+          initial: { opacity: 0 },
+          animate: {
+            opacity: 1,
+            transition: { delay: 0.3, duration: 0.1 },
+          },
+          exit: { opacity: 0, transition: { duration: 0 } },
         }}
-        id='upload-file'
-        onError={onError}
-        draggable="true"
-      />
+      >
+        <XIcon className="h-5 w-5 text-zinc-500" />
+      </DialogClose>
+    </DialogContainer>
+  </Dialog>
+ 
   );
 }
 

@@ -138,7 +138,7 @@ function CodeActionMenuContainer({
     <>
     {isShown &&
       <div className="code-action-menu-container flex items-center flex-row  mt-0 ml-2 space-x-4" style={{...position}}>
-          <div className=" text-black ">{codeFriendlyName}</div>
+          <div className=" dark:text-white text-black ">{codeFriendlyName}</div>
           <CopyButton editor={editor} getCodeDOMNode={getCodeDOMNode} />
           {canBePrettier(normalizedLang) ? (
             <PrettierButton
@@ -164,8 +164,7 @@ function getMouseInfo(event: MouseEvent): {
       'code.PlaygroundEditorTheme__code',
     );
     const isOutside = !(
-      codeDOMNode ||
-      target.closest<HTMLElement>('div.code-action-menu-container')
+      codeDOMNode || target.closest<HTMLElement>('.code-action-menu-container')
     );
 
     return {codeDOMNode, isOutside};
