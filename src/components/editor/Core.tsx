@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useSharedHistoryContext } from "../providers/SharedHistoryContext";
-import useLexicalEditable from "@lexical/react/useLexicalEditable";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import dynamic from "next/dynamic";
 import { Skeleton } from "../ui/skeleton";
@@ -29,7 +29,7 @@ import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import DragDropPaste from "./plugins/DragDropPastePlugin";
 import DraggableBlockPlugin from "./plugins/DraggableBlockPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-import {ClickableLinkPlugin} from '@lexical/react/LexicalClickableLinkPlugin';
+import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
 import TwitterPlugin from "./plugins/TwitterPlugin";
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
@@ -59,12 +59,19 @@ const TableHoverActionsPlugin = dynamic(
   () => import("@/components/editor/plugins/TableHoverActionsPlugin"),
   { ssr: false }
 );
-const CodeActionMenuPlugin= dynamic(() => import("@/components/editor/plugins/CodeActionMenuPlugin"),  { ssr: false });
-const FloatingTextFormatToolbarPlugin = dynamic(() => import("@/components/editor/plugins/FloatingTextFormatToolbarPlugin"),  { ssr: false });
+const CodeActionMenuPlugin = dynamic(
+  () => import("@/components/editor/plugins/CodeActionMenuPlugin"),
+  { ssr: false }
+);
+const FloatingTextFormatToolbarPlugin = dynamic(
+  () => import("@/components/editor/plugins/FloatingTextFormatToolbarPlugin"),
+  { ssr: false }
+);
 export default function Core() {
   const { historyState } = useSharedHistoryContext();
   const isEditable = useLexicalEditable();
-  const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
+  const [floatingAnchorElem, setFloatingAnchorElem] =
+    useState<HTMLDivElement | null>(null);
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
@@ -75,8 +82,6 @@ export default function Core() {
     }
   }, []);
 
-
- 
   return (
     <>
       {isEditable && (
@@ -107,7 +112,7 @@ export default function Core() {
         editor={activeEditor}
         setIsLinkEditMode={setIsLinkEditMode}
       />
-      <LexicalOnChangePlugin/>
+      <LexicalOnChangePlugin />
       <LinkPlugin />
       <HorizontalRulePlugin />
       <TabFocusPlugin />
@@ -122,13 +127,13 @@ export default function Core() {
       <LinkWithMetaDataPlugin />
       <ListPlugin />
       <LinkPlugin />
-      <StepperPlugin/>
+      <StepperPlugin />
       <TwitterPlugin />
       <CheckListPlugin />
       <ImagesPlugin />
       <AutoEmbedPlugin />
-      <HintPlugin/>
-      <YouTubePlugin/>
+      <HintPlugin />
+      <YouTubePlugin />
       <HistoryPlugin externalHistoryState={historyState} />
       <MarkdownShortcutPlugin />
       <ClickableLinkPlugin disabled={isEditable} />
@@ -137,7 +142,7 @@ export default function Core() {
         hasCellBackgroundColor={true}
         hasHorizontalScroll={true}
       />
-      
+
       {floatingAnchorElem && isEditable && (
         <>
           <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
@@ -146,7 +151,10 @@ export default function Core() {
             isLinkEditMode={isLinkEditMode}
             setIsLinkEditMode={setIsLinkEditMode}
           />
-          <FloatingTextFormatToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} anchorElem={floatingAnchorElem}/>
+          <FloatingTextFormatToolbarPlugin
+            setIsLinkEditMode={setIsLinkEditMode}
+            anchorElem={floatingAnchorElem}
+          />
           <TableCellActionMenuPlugin
             anchorElem={floatingAnchorElem}
             cellMerge={true}
@@ -156,8 +164,8 @@ export default function Core() {
           <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
         </>
       )}
-      
-      {isEditable && <SlashCommand/>}
+
+      {isEditable && <SlashCommand />}
     </>
   );
 }

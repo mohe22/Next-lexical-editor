@@ -17,6 +17,11 @@ export function LexicalOnChangePlugin() {
         }
         setNodePlaceholderFromSelection(editor);
 
+        editorState.read(() => {
+          const json = editorState.toJSON();
+          console.log("Editor Content JSON:", json);
+          // You can also pass this JSON to a parent component or store in DB
+        });
       }
     );
 
@@ -24,5 +29,5 @@ export function LexicalOnChangePlugin() {
       unregisterListener();
     };
   }, [editor]);
-  return <></>
+  return <></>;
 }

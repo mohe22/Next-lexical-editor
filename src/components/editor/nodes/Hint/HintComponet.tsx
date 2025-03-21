@@ -5,7 +5,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { cva } from "class-variance-authority";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { LexicalNestedComposer } from "@lexical/react/LexicalNestedComposer";
 import { PlainTextPlugin } from "@lexical/react/LexicalPlainTextPlugin";
 import { $isHintNode, HintType } from ".";
@@ -32,7 +32,6 @@ const hintVariants = cva(
     },
   }
 );
-
 
 export default function HintComponent({
   type,
@@ -174,8 +173,6 @@ export default function HintComponent({
       }
     });
   }
-
-
 
   return (
     <div className={hintVariants({ variant })}>

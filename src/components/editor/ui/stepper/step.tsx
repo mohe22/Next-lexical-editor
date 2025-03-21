@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { LexicalNestedComposer } from "@lexical/react/LexicalNestedComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import ImagesPlugin from "../../plugins/ImagesPlugin";
 import { Plus } from "lucide-react";
 import { Reorder } from "framer-motion";
-import {  StepType } from "../../nodes/Stepper";
+import { StepType } from "../../nodes/Stepper";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { useSharedHistoryContext } from "@/components/providers/SharedHistoryContext";
@@ -45,17 +45,16 @@ export default function Step({
   remove,
   updateTitle,
 }: Props) {
-
   const titleRef = React.useRef<HTMLDivElement>(null);
   const [isLinkEditMode, setIsLinkEditMode] = React.useState<boolean>(false);
   const [floatingAnchorElem, setFloatingAnchorElem] =
     useState<HTMLDivElement | null>(null);
   const { historyState } = useSharedHistoryContext();
   const activeEditorRef = useRef<LexicalEditor | null>(null);
- 
+
   const handleTitleBlur = () => {
     if (titleRef.current) {
-      updateTitle(item.id, titleRef.current.textContent!)
+      updateTitle(item.id, titleRef.current.textContent!);
     }
   };
 
@@ -74,7 +73,6 @@ export default function Step({
     setFloatingAnchorElem(_floatingAnchorElem);
   }, []);
 
-  
   useEffect(() => {
     const unregister = mergeRegister(
       item.content.registerCommand(
@@ -100,9 +98,7 @@ export default function Step({
       exit={{ opacity: 0, y: 20, transition: { duration: 0.3 } }}
       className="relative group my-2 flex w-full flex-row gap-x-6 select-none"
     >
-      <div 
-
-      className="h-7 w-7 absolute max-sm:w-5 max-sm:h-5 max-sm:text-xs rounded-full z-50 bg-muted cursor-grab flex items-center justify-center">
+      <div className="h-7 w-7 absolute max-sm:w-5 max-sm:h-5 max-sm:text-xs rounded-full z-50 bg-muted cursor-grab flex items-center justify-center">
         {numberd + 1}
       </div>
 
@@ -169,7 +165,7 @@ export default function Step({
       </div>
 
       <div
-        onClick={() => insertAt(numberd+1)}
+        onClick={() => insertAt(numberd + 1)}
         className="absolute max-sm:left-[2px] left-[4px] top-[35px] z-40 max-sm:w-4 max-sm:h-4 w-[20px] h-[20px] flex items-center justify-center ring-1 ring-gray-700 bg-gray-800 rounded-full cursor-pointer transition-opacity opacity-0 duration-500 group-hover:opacity-100"
       >
         <Plus className="size-[12px]" />
