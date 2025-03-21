@@ -18,11 +18,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { X } from "lucide-react";
-import useLexicalEditable from "@lexical/react/useLexicalEditable";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
 import { useMutation } from "@tanstack/react-query";
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { $isPollNode, createPollOption, Option, Options, PollNode } from "../../nodes/PollNode";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  $isPollNode,
+  createPollOption,
+  Option,
+  Options,
+  PollNode,
+} from "../../nodes/PollNode";
 
 function getTotalVotes(options: Options): number {
   return options.reduce((totalVotes, next) => {
@@ -48,7 +60,7 @@ function PollOptionComponent({
   ) => void;
   isEditable: boolean;
 }): React.JSX.Element {
-  const userId = "1212312" // change it with user ID
+  const userId = "1212312"; // change it with user ID
   const checkboxRef = useRef(null);
   const votesArray = option.votes;
   const checkedIndex = votesArray.indexOf(userId!);
@@ -57,18 +69,15 @@ function PollOptionComponent({
   const text = option.text;
   const [editor] = useLexicalComposerContext();
 
-  
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-
       try {
-     
         await new Promise<void>((resolve) => {
           withPollNode((node) => {
             node.toggleVote(option, userId!);
           }, resolve);
         });
-        return
+        return;
         // const currentState = editor.getEditorState();
         // await updateContent(id, currentState.toJSON(), true);
       } catch (error) {
